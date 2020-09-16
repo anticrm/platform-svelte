@@ -17,6 +17,7 @@
   import { Ref, Class, Doc, QueryResult } from '@anticrm/core'
   import { ClassModel } from '../..'
   import { getCoreService, getPresentationService, getEmptyModel } from '../../utils'
+  import { onDestroy } from 'svelte'
 
   export let _class: Ref<Class<Doc>>
 
@@ -33,6 +34,8 @@
   }
 
   $: getCoreService().then(c => c.query(_class, {})).then(qr => subscribe(qr))
+
+  onDestroy(() => { if(unsubscribe) unsubscribe() })
 
 </script>
 
